@@ -27,12 +27,9 @@ const pool = new Pool({
   port: 5432,
 });
 
-const getPayloadToken = (req) => {
+const getPayloadToken = ({ cookies }) => {
     const name = 'access-token'
-     let matches = req.header('cookie').match(new RegExp(
-          "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-     ));
-     const token = matches ? decodeURIComponent(matches[1]) : undefined;
+     let token = cookies?.[name]
       if (token) {
         return jwt.decode(token);
       }
@@ -48,6 +45,7 @@ const permissionMiddleware = (permRoles, request, response) => {
 }
 
 app.use(express.json());
+app.use(express.cookieParser());
 
 app.get('/accountant/payments', async (req, res) => {
   permissionMiddleware(AccountantEndpointPerm,req,res)
