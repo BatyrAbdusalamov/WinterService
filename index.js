@@ -28,8 +28,10 @@ const pool = new Pool({
 });
 
 const getPayloadToken = ({ cookies }) => {
-  const token = cookies?.['access-token'];
-  return jwt.decode(Array.isArray(token) ? token[0] : token);
+  const token = `; ${cookies}`.split('; access-token=');
+      if (token.length === 2) {
+        return jwt.decode(token.pop().split(';').shift());
+    }
 }
 
 const permissionMiddleware = (permRoles, request, response) => {
