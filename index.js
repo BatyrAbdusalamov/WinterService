@@ -29,7 +29,7 @@ const pool = new Pool({
 
 const getPayloadToken = (req) => {
     const name = 'access-token'
-     let matches = req.headers.cookie?.[name].match(new RegExp(
+     let matches = req.headers.cookie?.match(new RegExp(
           "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
      ));
      const token = matches ? decodeURIComponent(matches[1]) : undefined;
@@ -41,6 +41,7 @@ const getPayloadToken = (req) => {
 
 const permissionMiddleware = (permRoles, request, response) => {
   const payload = getPayloadToken(request);
+  console.log(payload)
   if(permRoles.some((role) => payload?.role === PermissionRoles[role])) {
     return null;
   }
