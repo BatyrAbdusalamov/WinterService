@@ -2,7 +2,6 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const { Pool } = require('pg');
 const ExcelJS = require('exceljs');
-const cookieParser = require('cookie-parser');
 const app = express();
 const port = 3000;
 
@@ -28,12 +27,12 @@ const pool = new Pool({
   port: 5432,
 });
 
-app.use(express.json());
-app.use(cookieParser());
-
-const getPayloadToken = ({ cookies }) => {
+const getPayloadToken = (req) => {
     const name = 'access-token'
-     let token = cookies?.[name]
+     let matches = req.headers.cookie?.[name].match(new RegExp(
+          "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+     ));
+     const token = matches ? decodeURIComponent(matches[1]) : undefined;
       if (token) {
         return jwt.decode(token);
       }
@@ -47,6 +46,9 @@ const permissionMiddleware = (permRoles, request, response) => {
   }
   return response.status(403).json({ error: 'Недостаточно прав' })
 }
+
+app.use(express.json());
+app.use(express.cookieParser());
 
 app.get('/accountant/payments', async (req, res) => {
   permissionMiddleware(AccountantEndpointPerm,req,res)
