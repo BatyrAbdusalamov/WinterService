@@ -37,7 +37,7 @@ const permissionMiddleware = (permRoles, request, response) => {
   if(permRoles.some((role) => payload?.role === PermissionRoles[role])) {
     return null;
   }
-  return res.status(403).json({ error: 'Недостаточно прав' })
+  return response.status(403).json({ error: 'Недостаточно прав' })
 }
 
 app.use(express.json());
