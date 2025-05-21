@@ -48,7 +48,6 @@ const permissionMiddleware = (permRoles, request, response) => {
 }
 
 app.use(express.json());
-app.use(express.cookieParser());
 
 app.get('/accountant/payments', async (req, res) => {
   permissionMiddleware(AccountantEndpointPerm,req,res)
