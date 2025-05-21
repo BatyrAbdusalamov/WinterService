@@ -1,0 +1,140 @@
+{
+    "openapi": "3.0.0",
+    "paths": {},
+    "info": {
+        "title": "Qualify Service",
+        "description": "The Qualify Service API description",
+        "version": "1.0",
+        "contact": {}
+    },
+    "tags": [],
+    "servers": [],
+    "components": {
+        "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "string" }
+        }
+      },
+      "Article": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" },
+          "created": { "type": "string" },
+          "description": { "type": "string" },
+          "image": { "type": "string" }
+        }
+      },
+      "Feedback": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" },
+          "clientId": { "type": "integer" },
+          "clientName": { "type": "string" },
+          "created": { "type": "string" },
+          "comment": { "type": "string" },
+          "rating": { "type": "number" },
+          "isVisible": { "type": "boolean" }
+        }
+      },
+      "Sport": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" },
+          "image": { "type": "string" }
+        }
+      },
+      "Group": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" },
+          "coachName": { "type": "string" },
+          "coachQualify": { "type": "string" },
+          "minAge": { "type": "integer" },
+          "maxAge": { "type": "integer" },
+          "spotsLeft": { "type": "integer" }
+        }
+      },
+      "ScheduleClass": {
+        "type": "object",
+        "properties": {
+          "classId": { "type": "integer" },
+          "sportId": { "type": "integer" },
+          "sportName": { "type": "string" },
+          "placeId": { "type": "integer" },
+          "placeName": { "type": "string" },
+          "timestamp": { "type": "string" },
+          "groupId": { "type": "integer" },
+          "groupName": { "type": "string" },
+          "duration": { "type": "integer" }
+        }
+      },
+      "CoachMain": {
+        "type": "object",
+        "properties": {
+          "coachName": { "type": "string" },
+          "coachQualify": { "type": "string" },
+          "coachPhoneNumber": { "type": "string" },
+          "kindOfSport": { "type": "string" },
+          "groups": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "groupId": { "type": "integer" },
+                "groupName": { "type": "string" },
+                "minAge": { "type": "integer" },
+                "maxAge": { "type": "integer" },
+                "clients": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "CoachSchedule": {
+        "type": "object",
+        "properties": {
+          "coachName": { "type": "string" },
+          "classes": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/ScheduleClass" }
+          }
+        }
+      },
+      "UserMain": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "phoneNumber": { "type": "string" },
+          "dateOfBirth": { "type": "string" },
+          "size": { "type": "string" },
+          "groups": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "integer" },
+                "name": { "type": "string" },
+                "minAge": { "type": "integer" },
+                "maxAge": { "type": "integer" },
+                "sportId": { "type": "integer" },
+                "sportName": { "type": "string" },
+                "coachId": { "type": "integer" },
+                "coachName": { "type": "string" },
+                "coachQualify": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+    }
+}

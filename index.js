@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const { Pool } = require('pg');
 const ExcelJS = require('exceljs');
+const swagger = require('./swagger.json');
 const app = express();
 const port = 3000;
 
@@ -1079,6 +1080,14 @@ app.post('/admin/group', async (req, res) => {
   }
 });
 
+app.get('/swagger/api/json', async (req,res) => {
+  try {
+    res.status(200).send(swagger)
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+})
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
