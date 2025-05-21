@@ -28,10 +28,15 @@ const pool = new Pool({
 });
 
 const getPayloadToken = ({ cookies }) => {
-  const token = `; ${cookies}`.split('; access-token=');
-      if (token.length === 2) {
-        return jwt.decode(token.pop().split(';').shift());
-    }
+    const name = 'access-token'
+     let matches = cookies.match(new RegExp(
+          "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+     ));
+     const token = matches ? decodeURIComponent(matches[1]) : undefined;
+      if (token) {
+        return jwt.decode(token);
+      }
+      return {};
 }
 
 const permissionMiddleware = (permRoles, request, response) => {
