@@ -27,9 +27,9 @@ const pool = new Pool({
   port: 5432,
 });
 
-const getPayloadToken = ({ cookies }) => {
+const getPayloadToken = ({ cookie }) => {
     const name = 'access-token'
-     let matches = cookies.match(new RegExp(
+     let matches = cookie.match(new RegExp(
           "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
      ));
      const token = matches ? decodeURIComponent(matches[1]) : undefined;
