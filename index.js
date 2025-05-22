@@ -49,7 +49,8 @@ const permissionMiddleware = (permRoles, request, response) => {
   return response.status(403).json({ error: 'Недостаточно прав' })
 }
 
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 app.get('/accountant/payments', async (req, res) => {
   permissionMiddleware(AccountantEndpointPerm,req,res)
