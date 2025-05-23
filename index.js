@@ -484,7 +484,7 @@ app.post('/user/sections', async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({error: 'Вы пытаетесь записаться в уже записанную секцию'});
   }
 });
 
